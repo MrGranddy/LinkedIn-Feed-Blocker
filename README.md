@@ -1,5 +1,7 @@
 # LinkedIn Feed Blocker
 
+Remove the feed.
+
 A simple Chrome extension that blocks the LinkedIn feed content. Keep on networking and do your job search while being shielded from LinkedIn content. (Just removes all posts from the feed.)
 
 ## Features
