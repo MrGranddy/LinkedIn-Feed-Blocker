@@ -1,0 +1,16 @@
+/* Hide the main feed container */
+main[aria-label="Main Feed"],
+div[data-test-id="main-feed"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}
+
+/* Hide any potential feed loading states */
+div[data-test-id="feed-loading"],
+div[data-test-id="feed-skeleton"] {
+    display: none !important;
+    visibility: hidden !important;
+} 

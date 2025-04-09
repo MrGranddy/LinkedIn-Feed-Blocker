@@ -1,17 +1,44 @@
-// Function to hide the LinkedIn feed
+// Function to inject CSS immediately
+function injectCSS() {
+    const style = document.createElement('style');
+    style.textContent = `
+        main[aria-label="Main Feed"],
+        div[data-test-id="main-feed"] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            height: 0 !important;
+            overflow: hidden !important;
+            pointer-events: none !important;
+        }
+    `;
+    
+    // Try to inject at the very top of the document
+    if (document.documentElement) {
+        document.documentElement.insertBefore(style, document.documentElement.firstChild);
+    } else if (document.head) {
+        document.head.appendChild(style);
+    }
+}
+
+// Function to hide the LinkedIn feed element (as backup)
 function hideLinkedInFeed() {
-    // Target the specific main feed element
     const feedSelectors = [
-        'main[aria-label="Main Feed"]'
+        'main[aria-label="Main Feed"]',
+        'div[data-test-id="main-feed"]'
     ];
 
-    // Function to hide elements matching selectors
     const hideElements = () => {
         feedSelectors.forEach(selector => {
             const elements = document.querySelectorAll(selector);
             elements.forEach(element => {
                 if (element) {
                     element.style.display = 'none';
+                    element.style.visibility = 'hidden';
+                    element.style.opacity = '0';
+                    element.style.height = '0';
+                    element.style.overflow = 'hidden';
+                    element.style.pointerEvents = 'none';
                 }
             });
         });
@@ -20,20 +47,25 @@ function hideLinkedInFeed() {
     // Initial hide
     hideElements();
 
-    // Create and observe mutations to handle dynamic content loading
-    const observer = new MutationObserver((mutations) => {
-        hideElements();
-    });
+    // Only start observing if document.body exists
+    if (document.body) {
+        const observer = new MutationObserver((mutations) => {
+            hideElements();
+        });
 
-    // Start observing the document body for changes
-    observer.observe(document.body, {
-        childList: true,
-        subtree: true
-    });
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    }
 }
 
-// Run the function when the page loads
-document.addEventListener('DOMContentLoaded', hideLinkedInFeed);
+// Run immediately
+injectCSS();
+hideLinkedInFeed();
 
-// Also run when the page is fully loaded
-window.addEventListener('load', hideLinkedInFeed); 
+// Also run when document is ready
+document.addEventListener('DOMContentLoaded', () => {
+    injectCSS();
+    hideLinkedInFeed();
+}); 
