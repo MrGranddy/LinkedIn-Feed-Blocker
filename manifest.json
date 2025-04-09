@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "LinkedIn Feed Blocker",
+  "version": "1.0",
+  "description": "A Google Chrome extension to block LinkedIn feed. Keep on networking and do your job search while being shielded from LinkedIn content. (Just removes all posts from the feed.)",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://*.linkedin.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://*.linkedin.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
